@@ -1,6 +1,5 @@
 //#region Main
 
-import type { BitFieldResolvable, MessageFlagsString } from "discord.js";
 import {
     MessageFlags,
     APIEmbed,
@@ -10,20 +9,7 @@ import {
     WebhookMessageEditOptions,
 } from "discord.js";
 import { Colors } from "discord.js";
-
-type Flags = BitFieldResolvable<
-    Extract<
-        MessageFlagsString,
-        | "Ephemeral"
-        | "SuppressEmbeds"
-        | "SuppressNotifications"
-        | "IsComponentsV2"
-    >,
-    | MessageFlags.Ephemeral
-    | MessageFlags.SuppressEmbeds
-    | MessageFlags.SuppressNotifications
-    | MessageFlags.IsComponentsV2
->;
+import Flags from "../types/flags";
 
 export const Reply = {
     interactionError(

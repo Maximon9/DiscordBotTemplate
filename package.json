@@ -1,0 +1,19 @@
+{
+    "name": "template-bot",
+    "private": true,
+    "version": "1.0.0",
+    "scripts": {
+        "build": "npm run build --workspaces",
+        "start": "npm run start --workspaces",
+        "stop": "npm run stop --workspaces",
+        "delete": "npm run delete --workspaces",
+        "restart": "npm run restart --workspaces",
+        "startServer": "(npm run stop || cls) && npm run build && npm run start && cls && cd backend && npm run showLog"
+    },
+    "workspaces": [
+        "backend"
+    ],
+    "engines": {
+        "node": ">=16"
+    }
+}

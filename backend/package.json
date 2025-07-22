@@ -1,0 +1,26 @@
+{
+    "name": "backend",
+    "version": "1.0.0",
+    "private": true,
+    "main": "dist/server.js",
+    "scripts": {
+        "build": "tsc",
+        "start": "pm2 start ecosystem.config.js --name backend-bot",
+        "stop": "pm2 stop backend-bot",
+        "delete": "pm2 delete backend-bot",
+        "restart": "pm2 restart backend-bot",
+        "dev": "ts-node src/server.ts",
+        "showLog": "cls && pm2 flush && cls && pm2 logs backend-bot"
+    },
+    "dependencies": {
+        "@types/cors": "^2.8.19",
+        "@types/express": "^5.0.3",
+        "@types/node": "^24.0.15",
+        "cors": "^2.8.5",
+        "discord.js": "^14.0.0",
+        "express": "^4.21.2",
+        "pm2": "^6.0.8",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.8.3"
+    }
+}

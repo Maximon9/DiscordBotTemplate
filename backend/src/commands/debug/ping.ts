@@ -1,5 +1,6 @@
 import { SlashCommandBuilder } from "discord.js";
 import { Command } from "../../utils/command";
+import { MessageFlags } from "discord.js";
 
 //#region Main
 const commandName = "ping" as const,
@@ -19,7 +20,7 @@ export default new Command(commandName, meta, ({ interaction }) => {
     const message = interaction.options.getString("message");
 
     return interaction.reply({
-        ephemeral: true,
+        flags: MessageFlags.Ephemeral,
         content: message ?? "Pong! 🏓",
     });
 });

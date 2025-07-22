@@ -1,6 +1,8 @@
 //#region Main
 
+import type { BitFieldResolvable, MessageFlagsString } from "discord.js";
 import {
+    MessageFlags,
     APIEmbed,
     ActionRowBuilder,
     InteractionReplyOptions,
@@ -9,20 +11,37 @@ import {
 } from "discord.js";
 import { Colors } from "discord.js";
 
+type Flags = BitFieldResolvable<
+    Extract<
+        MessageFlagsString,
+        | "Ephemeral"
+        | "SuppressEmbeds"
+        | "SuppressNotifications"
+        | "IsComponentsV2"
+    >,
+    | MessageFlags.Ephemeral
+    | MessageFlags.SuppressEmbeds
+    | MessageFlags.SuppressNotifications
+    | MessageFlags.IsComponentsV2
+>;
+
 export const Reply = {
     interactionError(
         ...args:
             | [
                   ...msgs: string[],
                   components: ActionRowBuilder<any>[],
-                  ephemeral: boolean
+                  msgFlags: MessageFlags
               ]
-            | [...msgs: string[], ephemeral: boolean]
+            | [...msgs: string[], msgFlags: MessageFlags]
             | [...msgs: string[], components: ActionRowBuilder<any>[]]
             | [...msgs: string[]]
     ): InteractionReplyOptions {
         let lastArg = args[args.length - 1];
-        const ephemeral = typeof lastArg === "boolean" ? lastArg : true;
+        const flags: Flags =
+            lastArg instanceof ActionRowBuilder
+                ? MessageFlags.Ephemeral
+                : (lastArg as Flags);
         if (typeof lastArg === "boolean") {
             args.splice(args.length - 1, 1);
             lastArg = args[args.length - 1];
@@ -36,7 +55,7 @@ export const Reply = {
             };
         });
         return {
-            ephemeral,
+            flags,
             embeds,
             components,
         };
@@ -46,14 +65,17 @@ export const Reply = {
             | [
                   ...embeds: APIEmbed[],
                   components: ActionRowBuilder<any>[],
-                  ephemeral: boolean
+                  msgFlags: MessageFlags
               ]
-            | [...embeds: APIEmbed[], ephemeral: boolean]
+            | [...embeds: APIEmbed[], msgFlags: MessageFlags]
             | [...embeds: APIEmbed[], components: ActionRowBuilder<any>[]]
             | [...embeds: APIEmbed[]]
     ): InteractionReplyOptions {
         let lastArg = args[args.length - 1];
-        const ephemeral = typeof lastArg === "boolean" ? lastArg : true;
+        const flags: Flags =
+            lastArg instanceof ActionRowBuilder
+                ? MessageFlags.Ephemeral
+                : (lastArg as Flags);
         if (typeof lastArg === "boolean") {
             args.splice(args.length - 1, 1);
             lastArg = args[args.length - 1];
@@ -61,7 +83,7 @@ export const Reply = {
         let components = Array.isArray(lastArg) ? lastArg : [];
         if (Array.isArray(lastArg)) args.splice(args.length - 1, 1);
         return {
-            ephemeral,
+            flags,
             embeds: args as APIEmbed[],
             components,
         };

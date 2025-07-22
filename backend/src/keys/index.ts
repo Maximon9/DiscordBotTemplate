@@ -1,8 +1,8 @@
-import { getEnvVar } from "../utils/env.js";
+import { getEnvVar } from "../utils/env";
 
 //#region Main
 export const Keys = {
-    clientToken: getEnvVar("ClIENT_TOKEN", "No Token"),
+    clientToken: getEnvVar("CLIENT_TOKEN", "No Token"),
     testGuild: getEnvVar("TEST_GUILD", "No Guild"),
     isScript: getEnvVar("IS_SCRIPT", "false") === "true",
     node_ENV: getEnvVar("NODE_ENV", "production") as
@@ -15,7 +15,7 @@ export const Keys = {
 export default Keys;
 //#endregion
 
-/* import { Keys } from "../types/index.js";\
+/* import { Keys } from "../types/index";\
 
 const keys: Keys = {
     clientToken: process.env.CLIENT_TOKEN ?? "nul",

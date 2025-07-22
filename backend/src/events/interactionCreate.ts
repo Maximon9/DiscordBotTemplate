@@ -1,11 +1,10 @@
 //#region Main
 
-import type { CommandNames } from "../commands/index.js";
-import { commandsMap } from "../commands/index.js";
-import { EditReply, Events, event, Reply } from "../utils/index.js";
-import type { AdvancedMessage } from "../types/messageHandler.js";
+import type { CommandNames } from "../commands/index";
+import { commandsMap } from "../commands/index";
+import { EditReply, Events, event, Reply } from "../utils/index";
 import { Colors } from "discord.js";
-import App from "../utils/app.js";
+import App from "../utils/app";
 
 const colorKeys = Object.keys(Colors) as (keyof typeof Colors)[];
 

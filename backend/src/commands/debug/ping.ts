@@ -1,5 +1,5 @@
-import {SlashCommandBuilder} from "discord.js";
-import {Command} from "../../utils/command.js";
+import { SlashCommandBuilder } from "discord.js";
+import { Command } from "../../utils/command";
 
 //#region Main
 const commandName = "ping" as const,
@@ -15,7 +15,7 @@ const commandName = "ping" as const,
                 .setRequired(false)
         );
 
-export default new Command(commandName, meta, ({interaction}) => {
+export default new Command(commandName, meta, ({ interaction }) => {
     const message = interaction.options.getString("message");
 
     return interaction.reply({

@@ -1,5 +1,5 @@
-import {ActionRowBuilder, ButtonBuilder, ButtonStyle} from "discord.js";
-import {CustomID} from "./ids.js";
+import { ActionRowBuilder, ButtonBuilder, ButtonStyle } from "discord.js";
+import { CustomID } from "./ids";
 
 //#region Main
 export function GetADismissButton(): ActionRowBuilder<ButtonBuilder> {
@@ -24,6 +24,9 @@ export function CreateConfirmationButtons(
         .setCustomId(cancelId)
         .setLabel(cancelLabel)
         .setStyle(ButtonStyle.Danger);
-    return new ActionRowBuilder<ButtonBuilder>().setComponents(yesButton, noButton);
+    return new ActionRowBuilder<ButtonBuilder>().setComponents(
+        yesButton,
+        noButton
+    );
 }
 //#endregion

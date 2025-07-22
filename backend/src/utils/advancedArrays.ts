@@ -4,8 +4,8 @@ import {
     type ArrayEventData,
     type ArrayEventNames,
     type ArrayListener,
-} from "../types/advancedArrays.js";
-import {Mathf} from "./math_util.js";
+} from "../types/advancedArrays";
+import { Mathf } from "./math_util";
 //#region Main
 /**
  * A class that adds event emitters and more functionality to arrays.
@@ -39,8 +39,7 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
                 this.#emit("changed", eventData);
             }
             return index;
-        }
-        else return 0;
+        } else return 0;
     }
 
     /**
@@ -65,8 +64,7 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
                 this.#emit("changed", eventData);
             }
             return index;
-        }
-        else return 0;
+        } else return 0;
     }
 
     /**
@@ -90,8 +88,7 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
                 this.#emit("all", eventData);
                 this.#emit("added", eventData);
             }
-        }
-        else {
+        } else {
             if (emit) this.push(item);
             else {
                 this.length++;
@@ -116,8 +113,7 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
                 this.splice(tempIndex, 0, item);
                 tempIndex++;
             }
-        }
-        else {
+        } else {
             for (let i = 0; i < items.length; i++) {
                 const item = items[i];
                 this.length++;
@@ -190,7 +186,11 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
         if (this.length > 0) {
             if (emit) {
                 let indices: number[] = [];
-                for (let i = Mathf.Clamp(start, 0, this.length); i < Mathf.Clamp(start + amount, 0, this.length); i++)
+                for (
+                    let i = Mathf.Clamp(start, 0, this.length);
+                    i < Mathf.Clamp(start + amount, 0, this.length);
+                    i++
+                )
                     indices.push(i);
                 const eventData: ArrayEventData<T> = {
                     array: this,
@@ -414,23 +414,35 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
 
     /**
      */
-    copyWithin(target: number, start: number, end?: number | undefined, emit = true): this {
+    copyWithin(
+        target: number,
+        start: number,
+        end?: number | undefined,
+        emit = true
+    ): this {
         const clone: T[] | undefined = emit ? [...this] : undefined,
             returnValue = super.copyWithin(target, start, end);
         if (end !== undefined && end > start && emit) {
-            const eventData: ArrayEventData<T> = {array: this, eventType: "changed", changeType: "copyWithIn"};
+            const eventData: ArrayEventData<T> = {
+                array: this,
+                eventType: "changed",
+                changeType: "copyWithIn",
+            };
             if (end - start > 1) {
                 eventData.from = clone![target];
                 eventData.to = clone![start];
                 eventData.index = target;
-            }
-            else {
+            } else {
                 const indices: number[] = [],
                     realLength = target + end - start;
                 eventData.from = clone!.slice(target, realLength);
                 eventData.to = clone!.slice(start, end);
 
-                for (let i = Mathf.Clamp(target, 0, this.length); i < Mathf.Clamp(realLength, 0, this.length); i++)
+                for (
+                    let i = Mathf.Clamp(target, 0, this.length);
+                    i < Mathf.Clamp(realLength, 0, this.length);
+                    i++
+                )
                     indices.push(i);
 
                 eventData.indices = indices;
@@ -443,23 +455,35 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
 
     /**
      */
-    fill(value: T, start?: number | undefined, end?: number | undefined, emit = true): this {
+    fill(
+        value: T,
+        start?: number | undefined,
+        end?: number | undefined,
+        emit = true
+    ): this {
         const clone: T[] | undefined = emit ? [...this] : undefined,
             returnValue = super.fill(value, start, end);
         start = start ?? 0;
         if (end !== undefined && end > start && emit) {
-            const eventData: ArrayEventData<T> = {array: this, eventType: "changed", changeType: "fill"};
+            const eventData: ArrayEventData<T> = {
+                array: this,
+                eventType: "changed",
+                changeType: "fill",
+            };
             if (end - start > 1) {
                 eventData.from = clone![start];
                 eventData.to = value;
                 eventData.index = start;
-            }
-            else {
+            } else {
                 const indices: number[] = [];
                 eventData.from = clone!.slice(start, end);
                 eventData.to = clone!.slice(start, end).fill(value);
 
-                for (let i = Mathf.Clamp(start, 0, this.length); i < Mathf.Clamp(end, 0, this.length); i++)
+                for (
+                    let i = Mathf.Clamp(start, 0, this.length);
+                    i < Mathf.Clamp(end, 0, this.length);
+                    i++
+                )
                     indices.push(i);
 
                 eventData.indices = indices;
@@ -471,19 +495,22 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
     }
 
     //#region Emitter Methods
-    #eventListeners: {[K in ArrayEventNames]?: Set<ArrayArgListener<T>>} = {};
+    #eventListeners: { [K in ArrayEventNames]?: Set<ArrayArgListener<T>> } = {};
     /**
      * This adds a listener to an event.
      * @param eventName Name of event.
      * @param listener A function that listens for an event.
      */
-    addlistener(eventName: ArrayEventNames, listener: ArrayListener<T>, ...args: any[]) {
+    addlistener(
+        eventName: ArrayEventNames,
+        listener: ArrayListener<T>,
+        ...args: any[]
+    ) {
         if (eventName === "all" || ArrayEventTypes[eventName] !== undefined) {
             const argListeners = this.#eventListeners[eventName] ?? new Set();
-            argListeners.add({listener, args});
+            argListeners.add({ listener, args });
             this.#eventListeners[eventName] = argListeners;
-        }
-        else throw new Error(`Error: ${eventName} is not an existing event`);
+        } else throw new Error(`Error: ${eventName} is not an existing event`);
     }
 
     /**
@@ -506,8 +533,7 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
 
             argListeners.delete(argListener);
             this.#eventListeners[eventName] = argListeners;
-        }
-        else throw new Error(`Error: ${eventName} is not an existing event`);
+        } else throw new Error(`Error: ${eventName} is not an existing event`);
     }
     /**
      * This removes all listeners from an event.
@@ -518,8 +544,7 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
             const argListeners = this.#eventListeners[eventName] ?? new Set();
             argListeners.clear();
             this.#eventListeners[eventName] = argListeners;
-        }
-        else throw new Error(`Error: ${eventName} is not an existing event`);
+        } else throw new Error(`Error: ${eventName} is not an existing event`);
     }
     /**
      * This returns the number of listeners inside an event.
@@ -530,8 +555,7 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
         if (eventName === "all" || ArrayEventTypes[eventName] !== undefined) {
             const argListeners = this.#eventListeners[eventName] ?? new Set();
             return argListeners.size;
-        }
-        else throw new Error(`Error: ${eventName} is not an existing event`);
+        } else throw new Error(`Error: ${eventName} is not an existing event`);
     }
     /**
      * This returns all the listeners inside an event.
@@ -541,9 +565,10 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
     getEventListeners(eventName: ArrayEventNames): Set<ArrayListener<T>> {
         if (eventName === "all" || ArrayEventTypes[eventName] !== undefined) {
             const argListeners = this.#eventListeners[eventName] ?? new Set();
-            return new Set([...argListeners].map((argListener) => argListener.listener));
-        }
-        else throw new Error(`Error: ${eventName} is not an existing event`);
+            return new Set(
+                [...argListeners].map((argListener) => argListener.listener)
+            );
+        } else throw new Error(`Error: ${eventName} is not an existing event`);
     }
     /**
      * Private function that emits an event.
@@ -560,8 +585,7 @@ export class AdvancedArrayEmitter<T> extends Array<T> {
                     throw new Error(error as any);
                 }
             }
-        }
-        else throw new Error(`Error: ${eventName} is not an existing event`);
+        } else throw new Error(`Error: ${eventName} is not an existing event`);
     }
     //#endregion Emitter Methods
 }
@@ -585,8 +609,7 @@ export class AdvancedArray<T> extends Array<T> {
             const index = this.indexOf(item);
             this[index] = to;
             return index;
-        }
-        else return 0;
+        } else return 0;
     }
 
     /**
@@ -598,8 +621,7 @@ export class AdvancedArray<T> extends Array<T> {
         if (this.length > 0) {
             this[index] = to;
             return index;
-        }
-        else return 0;
+        } else return 0;
     }
 
     /**
@@ -630,8 +652,7 @@ export class AdvancedArray<T> extends Array<T> {
                 this.splice(tempIndex, 0, item);
                 tempIndex++;
             }
-        }
-        else {
+        } else {
             for (let i = 0; i < items.length; i++) {
                 const item = items[i];
                 this.push(item);

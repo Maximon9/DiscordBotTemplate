@@ -7,7 +7,7 @@ module.exports = {
             watch: false,
             env: {
                 NODE_ENV: "production",
-                ClIENT_TOKEN: "The discord bot token",
+                CLIENT_TOKEN: "The discord bot token",
                 GITHUB_WEBHOOK_SECRET: "The webhook secret",
                 PORT: 3000,
             },

@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits } from "discord.js";
-import keys from "../keys/index.js";
-import events from "../events/index.js";
-import { registerEvents } from "../utils/event.js";
+import keys from "../keys";
+import events from "../events";
+import { registerEvents } from "../utils";
 export default async function RunDiscordBot() {
     const client = new Client({
         intents: [

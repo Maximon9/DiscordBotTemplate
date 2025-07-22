@@ -1,4 +1,4 @@
-import { EventEmitter } from "./eventEmitter.js";
+import { EventEmitter } from "./eventEmitter";
 export const appEventEmitter = new EventEmitter();
 
 //#region Main

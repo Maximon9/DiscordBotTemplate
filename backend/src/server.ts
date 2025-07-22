@@ -6,7 +6,7 @@ import cors from "cors";
 import crypto from "crypto";
 import { log } from "console";
 import { LOCK_FILE, redeployProject } from "./deploy";
-import RunDiscordBot from "./client";
+import RunDiscordBot from "./client/index";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -60,4 +60,4 @@ app.listen(PORT, () => {
     RunDiscordBot();
 });
 
-//#endregion
+//#endregion //

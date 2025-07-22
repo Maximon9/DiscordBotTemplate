@@ -1,6 +1,6 @@
-import Debug from "./debug/index.js";
-import { chunk } from "../utils/index.js";
-import type { Command } from "../utils/command.js";
+import Debug from "./debug/index";
+import { chunk } from "../utils/index";
+import type { Command } from "../utils/command";
 import type { APIEmbedField } from "discord.js";
 
 //#region Main

@@ -1,5 +1,5 @@
-import { category } from "../../utils/command.js";
-import ping from "./ping.js";
+import { category } from "../../utils/command";
+import ping from "./ping";
 
 const commands = [ping];
 const extra = {

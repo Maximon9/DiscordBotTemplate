@@ -25,8 +25,8 @@ import {
     DMTEventType,
     InteractiveInteraction,
     AdvancedMessage,
-} from "../types/index.js";
-import { AdvancedArray, Stringf } from "./index.js";
+} from "../types/index";
+import { AdvancedArray, Stringf } from "./index";
 
 export class MessageHandler extends AdvancedArray<DetatchServerCache> {
     static Messages: Collection<string, Response | Response[]> =
